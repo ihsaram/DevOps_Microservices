@@ -18,5 +18,7 @@ podname=$(kubectl get pod -l app=prediction -o name)
 
 # Step 4:
 # Forward the container port to a host
-kubectl port-forward $podname 8000:80
-
+kubectl port-forward $podname 8000:80 &
+PID=$!
+kubectl logs --tail 0 -f $podname
+kill $PID
